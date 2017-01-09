@@ -83,21 +83,13 @@
                                 NSLog(@"Favorite tapped");
                             }];
    
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Tws", nil)
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Two", nil)
                               image:[UIImage imageNamed:@"Icon2"]
                                type:AHKActionSheetButtonTypeDisabled
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
                             }];
 
-    /*
-    [actionSheet addButtonWithTitle:@""
-                              image:nil
-                               type:AHKActionSheetButtonTypeSpace
-                            handler:^(AHKActionSheet *as) {
-                                NSLog(@"Share tapped");
-                            }];
-    */
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete", nil)
                               image:[UIImage imageNamed:@"Icon4"]
                                type:AHKActionSheetButtonTypeDestructive
@@ -106,7 +98,6 @@
                             }];
     
     [actionSheet show];
-
 }
 
 #pragma mark - Private
