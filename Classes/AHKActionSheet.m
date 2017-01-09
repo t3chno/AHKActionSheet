@@ -23,7 +23,7 @@ static const CGFloat kAutoDismissOffset = 80.0f;
 static const CGFloat kFlickDownHandlingOffset = 20.0f;
 static const CGFloat kFlickDownMinVelocity = 2000.0f;
 // How much free space to leave at the top (above the tableView's contents) when there's a lot of elements. It makes this control look similar to the UIActionSheet.
-static const CGFloat kTopSpaceMarginFraction = 0.333f;
+static const CGFloat kTopSpaceMarginFraction = 0.0f;
 // cancelButton's shadow height as the ratio to the cancelButton's height
 static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 
@@ -95,6 +95,19 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     return self;
 }
 
+- (instancetype)initWithView:(UIView *)view title:(NSString *)title
+{
+    self = [super init];
+    
+    if (self) {
+        _title = [title copy];
+        _cancelButtonTitle = @"Cancel";
+        _view = view;
+    }
+    
+    return self;
+}
+
 - (instancetype)init
 {
     return [self initWithTitle:nil];
@@ -121,6 +134,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+    
+    cell.separatorInset = UIEdgeInsetsMake(0.f, 55.f, 0.f, 0.f);
+    
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
 
     NSDictionary *attributes = nil;
@@ -136,6 +152,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         case AHKActionSheetButtonTypeDestructive:
             attributes = self.destructiveButtonTextAttributes;
             break;
+        case AHKActionSheetButtonTypeEncrypted:
+            attributes = self.encryptedButtonTextAttributes;
+            break;
     }
 
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
@@ -150,7 +169,8 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
     }
 
-    cell.backgroundColor = [UIColor clearColor];
+    // Cganhe to White Color
+    cell.backgroundColor = [UIColor whiteColor];
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
         cell.selectedBackgroundView = [[UIView alloc] init];
@@ -176,6 +196,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     return self.buttonHeight;
 }
 
+/*
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // Remove separator inset as described here: http://stackoverflow.com/a/25877725/783960
@@ -193,6 +214,9 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+*/
+
+
 
 #pragma mark - UIScrollViewDelegate
 
@@ -291,7 +315,10 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                              CGRectGetMaxY(self.bounds) - self.cancelButtonHeight,
                                              CGRectGetWidth(self.bounds),
                                              self.cancelButtonHeight);
-            
+    
+        // Add White color background
+        self.cancelButton.backgroundColor = [UIColor whiteColor];
+        
         self.tableView.transform = CGAffineTransformMakeTranslation(0, 0);
 
 
@@ -307,6 +334,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
             // leave an empty space on the top to make the control look similar to UIActionSheet
             topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
         }
+        
         self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
 
         self.tableView.bounces = [self.cancelOnPanGestureEnabled boolValue] || !buttonsFitInWithoutScrolling;
@@ -477,13 +505,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         tableView.separatorColor = self.separatorColor;
     }
     
-    // Fix indentation on iPad
-    // http://stackoverflow.com/questions/25770119/ios-8-uitableview-separator-inset-0-not-working/25877725#25877725
-    if([tableView respondsToSelector:@selector(setCellLayoutMarginsFollowReadableWidth:)])
-    {
-        tableView.cellLayoutMarginsFollowReadableWidth = NO;
-    }
-
     tableView.delegate = self;
     tableView.dataSource = self;
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
@@ -519,6 +540,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
         // create and add a header consisting of the label
         UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), labelSize.height + 2*topBottomPadding)];
         [headerView addSubview:label];
+        
         self.tableView.tableHeaderView = headerView;
 
     } else if (self.headerView) {
@@ -532,9 +554,16 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
                                            CGRectGetHeight(self.tableView.tableHeaderView.frame) - separatorHeight,
                                            CGRectGetWidth(self.tableView.tableHeaderView.frame),
                                            separatorHeight);
+        
         UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
         separator.backgroundColor = self.tableView.separatorColor;
+        
+        // Add line
+        UIView *line = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.tableHeaderView.frame), 1 / UIScreen.mainScreen.scale)];
+        line.backgroundColor = self.tableView.separatorColor;
+        
         [self.tableView.tableHeaderView addSubview:separator];
+        [self.tableView.tableHeaderView addSubview:line];
     }
 }
 
