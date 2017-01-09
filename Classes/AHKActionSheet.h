@@ -90,6 +90,18 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 - (instancetype)initWithTitle:(NSString *)title;
 
 /**
+ *  Initializes the action sheet with a specified view and title. `headerView` can be used if a string is insufficient for the title; set `title` as `nil` in this case.
+ *
+ *  It's the designated initializer.
+ *
+ *  @param view
+ *  @param title A string to display in the title area, above the buttons.
+ *
+ *  @return A newly initialized action sheet.
+ */
+- (instancetype)initWithView:(UIView *)view title:(NSString *)title;
+
+/**
  *  Adds a button without an image. Has to be called before showing the action sheet.
  *
  *  @param handler A completion handler block to execute when a dismissal animation (after the user tapped on the button) has finished.
