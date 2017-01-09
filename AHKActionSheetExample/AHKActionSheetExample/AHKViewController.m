@@ -64,52 +64,49 @@
 
 - (IBAction)advancedExampleTapped:(id)sender
 {
-    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithTitle:nil];
+    AHKActionSheet *actionSheet = [[AHKActionSheet alloc] initWithView:self.view title:nil];
 
-    actionSheet.blurTintColor = [UIColor colorWithWhite:0.0f alpha:0.75f];
-    actionSheet.blurRadius = 8.0f;
-    actionSheet.buttonHeight = 50.0f;
+    actionSheet.animationDuration = 0.2;
+    actionSheet.blurRadius = 0.5f;
+    actionSheet.buttonHeight = 50.0;
     actionSheet.cancelButtonHeight = 50.0f;
-    actionSheet.animationDuration = 0.5f;
-    actionSheet.cancelButtonShadowColor = [UIColor colorWithWhite:0.0f alpha:0.1f];
-    actionSheet.separatorColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
-    actionSheet.selectedBackgroundColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
-    UIFont *defaultFont = [UIFont fontWithName:@"Avenir" size:17.0f];
-    actionSheet.buttonTextAttributes = @{ NSFontAttributeName : defaultFont,
-                                          NSForegroundColorAttributeName : [UIColor whiteColor] };
-    actionSheet.disabledButtonTextAttributes = @{ NSFontAttributeName : defaultFont,
-                                                  NSForegroundColorAttributeName : [UIColor grayColor] };
-    actionSheet.destructiveButtonTextAttributes = @{ NSFontAttributeName : defaultFont,
-                                          NSForegroundColorAttributeName : [UIColor redColor] };
-    actionSheet.cancelButtonTextAttributes = @{ NSFontAttributeName : defaultFont,
-                                          NSForegroundColorAttributeName : [UIColor whiteColor] };
+    actionSheet.selectedBackgroundColor = [UIColor colorWithRed:0.0/255.0 green:130.0/255.0 blue:201.0/255.0 alpha:0.1];
+    actionSheet.encryptedButtonTextAttributes = @{ NSFontAttributeName:[UIFont systemFontOfSize:17], NSForegroundColorAttributeName:[UIColor colorWithRed:241.0/255.0 green:90.0/255.0 blue:34.0/255.0 alpha:1.0] };
+    actionSheet.buttonTextAttributes = @{ NSFontAttributeName:[UIFont systemFontOfSize:17], NSForegroundColorAttributeName:[UIColor colorWithRed:65.0/255.0 green:64.0/255.0 blue:66.0/255.0 alpha:1.0] };
+    actionSheet.separatorColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:0.2];
+    actionSheet.cancelButtonTitle = @"Cancel";
 
-    UIView *headerView = [[self class] fancyHeaderView];
-    actionSheet.headerView = headerView;
-
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Info", nil)
-                              image:[UIImage imageNamed:@"Icon1"]
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"One", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
                                type:AHKActionSheetButtonTypeDefault
-                            handler:nil];
-
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites (disabled)", nil)
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+   
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"Tws", nil)
                               image:[UIImage imageNamed:@"Icon2"]
                                type:AHKActionSheetButtonTypeDisabled
-                            handler:nil];
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
 
-    for (int i = 0; i < 5; i++) {
-        [actionSheet addButtonWithTitle:[NSString stringWithFormat:@"Share %d", i]
-                                  image:[UIImage imageNamed:@"Icon3"]
-                                   type:AHKActionSheetButtonTypeDefault
-                                handler:nil];
-    }
-
+    /*
+    [actionSheet addButtonWithTitle:@""
+                              image:nil
+                               type:AHKActionSheetButtonTypeSpace
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Share tapped");
+                            }];
+    */
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete", nil)
                               image:[UIImage imageNamed:@"Icon4"]
                                type:AHKActionSheetButtonTypeDestructive
-                            handler:nil];
-
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Delete tapped");
+                            }];
+    
     [actionSheet show];
+
 }
 
 #pragma mark - Private
