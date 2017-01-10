@@ -81,6 +81,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     [appearance setCancelOnPanGestureEnabled:@(YES)];
     [appearance setCancelOnTapEmptyAreaEnabled:@(NO)];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
+    [appearance setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (instancetype)initWithTitle:(NSString *)title
@@ -170,7 +171,7 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     }
 
     // Cganhe to White Color
-    cell.backgroundColor = [UIColor whiteColor];
+    cell.backgroundColor = self.backgroundColor;
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
         cell.selectedBackgroundView = [[UIView alloc] init];
