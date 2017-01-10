@@ -160,10 +160,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
             attributes = self.encryptedButtonTextAttributes;
             cell.backgroundColor = self.backgroundColor;
             break;
-        case AHKActionSheetButtonTypeAdvanced:
-            attributes = self.buttonTextAttributes;
-            cell.backgroundColor = self.backgroundColorAdvanced;
-            break;
     }
 
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
