@@ -12,7 +12,8 @@ typedef NS_ENUM(NSInteger, AHKActionSheetButtonType) {
     AHKActionSheetButtonTypeDefault = 0,
 	AHKActionSheetButtonTypeDisabled,
     AHKActionSheetButtonTypeDestructive,
-    AHKActionSheetButtonTypeEncrypted
+    AHKActionSheetButtonTypeEncrypted,
+    AHKActionSheetButtonTypeAdvanced
 };
 
 @class AHKActionSheet;
@@ -49,6 +50,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
 /// Background color of the button (internally it's a UITableViewCell)
 @property (strong, nonatomic) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *backgroundColorAdvanced UI_APPEARANCE_SELECTOR;
 /// Background color of the button when it's tapped (internally it's a UITableViewCell)
 @property (strong, nonatomic) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
 /// Text attributes of the title (passed in initWithTitle: or set via `title` property)

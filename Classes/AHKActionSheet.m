@@ -145,16 +145,24 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     {
         case AHKActionSheetButtonTypeDefault:
             attributes = self.buttonTextAttributes;
+            cell.backgroundColor = self.backgroundColor;
             break;
         case AHKActionSheetButtonTypeDisabled:
             attributes = self.disabledButtonTextAttributes;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.backgroundColor = self.backgroundColor;
             break;
         case AHKActionSheetButtonTypeDestructive:
             attributes = self.destructiveButtonTextAttributes;
+            cell.backgroundColor = self.backgroundColor;
             break;
         case AHKActionSheetButtonTypeEncrypted:
             attributes = self.encryptedButtonTextAttributes;
+            cell.backgroundColor = self.backgroundColor;
+            break;
+        case AHKActionSheetButtonTypeAdvanced:
+            attributes = self.buttonTextAttributes;
+            cell.backgroundColor = self.backgroundColorAdvanced;
             break;
     }
 
@@ -169,9 +177,6 @@ static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
     if ([UIImageView instancesRespondToSelector:@selector(tintColor)]){
         cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
     }
-
-    // Cganhe to White Color
-    cell.backgroundColor = self.backgroundColor;
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
         cell.selectedBackgroundView = [[UIView alloc] init];

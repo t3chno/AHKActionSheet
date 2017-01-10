@@ -75,6 +75,7 @@
     actionSheet.buttonTextAttributes = @{ NSFontAttributeName:[UIFont systemFontOfSize:17], NSForegroundColorAttributeName:[UIColor colorWithRed:65.0/255.0 green:64.0/255.0 blue:66.0/255.0 alpha:1.0] };
     actionSheet.separatorColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:0.2];
     actionSheet.cancelButtonTitle = @"Cancel";
+    actionSheet.backgroundColorAdvanced = [UIColor clearColor];
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"One", nil)
                               image:[UIImage imageNamed:@"Icon2"]
@@ -85,7 +86,7 @@
    
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Two", nil)
                               image:[UIImage imageNamed:@"Icon2"]
-                               type:AHKActionSheetButtonTypeDisabled
+                               type:AHKActionSheetButtonTypeAdvanced
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
                             }];
