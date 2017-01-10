@@ -33,6 +33,7 @@
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Info", nil)
                               image:[UIImage imageNamed:@"Icon1"]
+                            backgroundColor: [UIColor whiteColor]
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Info tapped");
@@ -40,6 +41,7 @@
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Add to Favorites", nil)
                               image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor whiteColor]
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
@@ -47,6 +49,7 @@
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Share", nil)
                               image:[UIImage imageNamed:@"Icon3"]
+                    backgroundColor: [UIColor whiteColor]
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Share tapped");
@@ -54,6 +57,7 @@
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete", nil)
                               image:[UIImage imageNamed:@"Icon4"]
+                    backgroundColor: [UIColor whiteColor]
                                type:AHKActionSheetButtonTypeDestructive
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Delete tapped");
@@ -78,6 +82,7 @@
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"One", nil)
                               image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor whiteColor]
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
@@ -85,6 +90,7 @@
    
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Two", nil)
                               image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor whiteColor]
                                type:AHKActionSheetButtonTypeEncrypted
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
@@ -92,6 +98,7 @@
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete", nil)
                               image:[UIImage imageNamed:@"Icon4"]
+                    backgroundColor: [UIColor redColor]
                                type:AHKActionSheetButtonTypeDestructive
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Delete tapped");

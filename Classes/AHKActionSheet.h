@@ -47,8 +47,6 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 @property (strong, nonatomic) NSNumber *buttonTextCenteringEnabled UI_APPEARANCE_SELECTOR;
 /// Color of the separator between buttons.
 @property (strong, nonatomic) UIColor *separatorColor UI_APPEARANCE_SELECTOR;
-/// Background color of the button (internally it's a UITableViewCell)
-@property (strong, nonatomic) UIColor *backgroundColor UI_APPEARANCE_SELECTOR;
 /// Background color of the button when it's tapped (internally it's a UITableViewCell)
 @property (strong, nonatomic) UIColor *selectedBackgroundColor UI_APPEARANCE_SELECTOR;
 /// Text attributes of the title (passed in initWithTitle: or set via `title` property)
@@ -116,7 +114,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
  *  @param image   The image to display on the left of the title.
  *  @param handler A completion handler block to execute when a dismissal animation (after the user tapped on the button) has finished.
  */
-- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
+- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image backgroundColor:(UIColor *)backgroundColor type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler;
 
 /// Displays the action sheet.
 - (void)show;
