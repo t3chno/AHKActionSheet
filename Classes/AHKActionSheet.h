@@ -6,6 +6,12 @@
 //  Copyright (c) 2014 Arkadiusz Holko. All rights reserved.
 //
 
+//  Modify by Marino Faggiana on 11/01/17.
+//  Copyright (c) 2017 TWS. All rights reserved.
+//
+//  Author Marino Faggiana <m.faggiana@twsweb.it>
+//
+
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, AHKActionSheetButtonType) {
@@ -53,7 +59,7 @@ typedef void(^AHKActionSheetHandler)(AHKActionSheet *actionSheet);
 /// Text attributes of the title (passed in initWithTitle: or set via `title` property)
 @property (copy, nonatomic) NSDictionary *titleTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *buttonTextAttributes UI_APPEARANCE_SELECTOR;
-@property (copy, nonatomic) NSDictionary *headerButtonTextAttributes UI_APPEARANCE_SELECTOR;
+@property (copy, nonatomic) NSDictionary *disableButtonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *destructiveButtonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *encryptedButtonTextAttributes UI_APPEARANCE_SELECTOR;
 @property (copy, nonatomic) NSDictionary *cancelButtonTextAttributes UI_APPEARANCE_SELECTOR;

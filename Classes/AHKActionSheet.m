@@ -6,6 +6,12 @@
 //  Copyright (c) 2014 Arkadiusz Holko. All rights reserved.
 //
 
+//  Modify by Marino Faggiana on 11/01/17.
+//  Copyright (c) 2017 TWS. All rights reserved.
+//
+//  Author Marino Faggiana <m.faggiana@twsweb.it>
+//
+
 #import <QuartzCore/QuartzCore.h>
 #import "AHKActionSheet.h"
 #import "AHKActionSheetViewController.h"
@@ -13,7 +19,7 @@
 #import "UIWindow+AHKAdditions.h"
 
 
-static const NSTimeInterval kDefaultAnimationDuration = 0.5f;
+static const NSTimeInterval kDefaultAnimationDuration = 0.2f;
 // Length of the range at which the blurred background is being hidden when the user scrolls the tableView to the top.
 static const CGFloat kBlurFadeRangeSize = 200.0f;
 static NSString * const kCellIdentifier = @"Cell";
@@ -64,21 +70,21 @@ static const CGFloat kSpaceDivide = 5.0f;
     }
 
     AHKActionSheet *appearance = [self appearance];
-    [appearance setBlurRadius:16.0f];
-    [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
+    [appearance setBlurRadius:0.0f];
+    [appearance setBlurTintColor:[UIColor colorWithWhite:0.0f alpha:0.5f]];
     [appearance setBlurSaturationDeltaFactor:1.8f];
-    [appearance setButtonHeight:60.0f];
-    [appearance setSeparatorHeight:0.0f];
+    [appearance setButtonHeight:50.0f];
+    [appearance setSeparatorHeight:5.0f];
     [appearance setCancelButtonHeight:44.0f];
     [appearance setAutomaticallyTintButtonImages:@YES];
     [appearance setSelectedBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.2f]];
     [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
     [appearance setButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
-    [appearance setHeaderButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
+    [appearance setDisableButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
     [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName : [UIColor redColor] }];
     [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f], NSForegroundColorAttributeName : [UIColor grayColor] }];
     [appearance setCancelOnPanGestureEnabled:@(NO)];
-    [appearance setCancelOnTapEmptyAreaEnabled:@(NO)];
+    [appearance setCancelOnTapEmptyAreaEnabled:@(YES)];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
 }
 
@@ -145,7 +151,8 @@ static const CGFloat kSpaceDivide = 5.0f;
             attributes = self.buttonTextAttributes;
             break;
         case AHKActionSheetButtonTypeDisabled:
-            attributes = self.headerButtonTextAttributes;
+            attributes = self.disableButtonTextAttributes;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             break;
         case AHKActionSheetButtonTypeDestructive:
             attributes = self.destructiveButtonTextAttributes;
@@ -154,19 +161,38 @@ static const CGFloat kSpaceDivide = 5.0f;
             attributes = self.encryptedButtonTextAttributes;
             break;
     }
+    
+    UIImageView *imageView;
+    
+    if (item.type == AHKActionSheetButtonTypeDisabled) {
+        
+        imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, _buttonHeight/2 - (30/2), 30, 30)];
+        imageView.backgroundColor = [UIColor clearColor];
+        [imageView setImage:item.image];
+        
+    } else {
+        
+        imageView = [[UIImageView alloc]initWithFrame:CGRectMake(15, _buttonHeight/2 - (25/2), 25, 25)];
+        
+        BOOL useTemplateMode = [UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)] && [self.automaticallyTintButtonImages boolValue];
 
-    NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
-    cell.textLabel.attributedText = attrTitle;
-    cell.textLabel.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
-
-    // Use image with template mode with color the same as the text (when enabled).
-    BOOL useTemplateMode = [UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)] && [self.automaticallyTintButtonImages boolValue];
-    cell.imageView.image = useTemplateMode ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
-
-    if ([UIImageView instancesRespondToSelector:@selector(tintColor)]){
-        cell.imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
+        imageView.image = useTemplateMode ? [item.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] : item.image;
+        
+        if ([UIImageView instancesRespondToSelector:@selector(tintColor)]){
+            imageView.tintColor = attributes[NSForegroundColorAttributeName] ? attributes[NSForegroundColorAttributeName] : [UIColor blackColor];
+        }
     }
-
+    
+    [cell.contentView addSubview:imageView];
+        
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(cell.frame.size.height + 5 , 0, cell.frame.size.width - cell.frame.size.height - 20, cell.frame.size.height)];
+    NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
+    label.text =  [NSString stringWithFormat: @"test"];
+    label.numberOfLines = 0;
+    label.attributedText = attrTitle;
+    label.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
+    [cell.contentView addSubview:label];
+    
     cell.backgroundColor = item.backgroundColor;
 
     if (self.selectedBackgroundColor && ![cell.selectedBackgroundView.backgroundColor isEqual:self.selectedBackgroundColor]) {
@@ -493,7 +519,9 @@ static const CGFloat kSpaceDivide = 5.0f;
     
     [cancelButton setAttributedTitle:attrTitle forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
+    
+    cancelButton.frame = CGRectMake(10, CGRectGetMaxY(self.bounds) - self.cancelButtonHeight, CGRectGetWidth(self.bounds) - 20, self.cancelButtonHeight - kSpaceDivide);
+    
     // move the button below the screen (ready to be animated -show)
     cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight - kSpaceDivide);
     cancelButton.clipsToBounds = YES;
