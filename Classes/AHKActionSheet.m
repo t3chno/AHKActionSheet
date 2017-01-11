@@ -72,16 +72,12 @@ static const CGFloat kSpaceDivide = 5.0f;
     [appearance setCancelButtonHeight:44.0f];
     [appearance setAutomaticallyTintButtonImages:@YES];
     [appearance setSelectedBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.2f]];
-    [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
-                                                 NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
+    [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
     [appearance setButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
-    [appearance setDisabledButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
-                                                   NSForegroundColorAttributeName : [UIColor colorWithWhite:0.6f alpha:1.0] }];
-    [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
-                                                      NSForegroundColorAttributeName : [UIColor redColor] }];
-    [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
-                                          NSForegroundColorAttributeName : [UIColor grayColor] }];
-    [appearance setCancelOnPanGestureEnabled:@(YES)];
+    [appearance setHeaderButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
+    [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName : [UIColor redColor] }];
+    [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f], NSForegroundColorAttributeName : [UIColor grayColor] }];
+    [appearance setCancelOnPanGestureEnabled:@(NO)];
     [appearance setCancelOnTapEmptyAreaEnabled:@(NO)];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
 }
@@ -138,7 +134,7 @@ static const CGFloat kSpaceDivide = 5.0f;
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     
-    //cell.separatorInset = UIEdgeInsetsMake(0.f, 55.f, 0.f, 0.f);
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
 
@@ -149,8 +145,7 @@ static const CGFloat kSpaceDivide = 5.0f;
             attributes = self.buttonTextAttributes;
             break;
         case AHKActionSheetButtonTypeDisabled:
-            attributes = self.disabledButtonTextAttributes;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            attributes = self.headerButtonTextAttributes;
             break;
         case AHKActionSheetButtonTypeDestructive:
             attributes = self.destructiveButtonTextAttributes;

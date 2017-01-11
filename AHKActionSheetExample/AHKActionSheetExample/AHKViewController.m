@@ -93,7 +93,7 @@
                               image:[UIImage imageNamed:@"Icon2"]
                     backgroundColor: [UIColor blueColor]
                              height:50.0
-                               type:AHKActionSheetButtonTypeDefault
+                               type:AHKActionSheetButtonTypeDisabled
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
                             }];
