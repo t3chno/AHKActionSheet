@@ -218,7 +218,7 @@ static const CGFloat kSpaceDivide = 5.0f;
         CGPathAddArcToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMinY(bounds), CGRectGetMaxX(bounds), CGRectGetMidY(bounds), cornerRadius);
         CGPathAddLineToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMaxY(bounds));
         addLine = YES;
-    } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-2) {
+    } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1) {
         CGPathMoveToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds));
         CGPathAddArcToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMaxY(bounds), CGRectGetMidX(bounds), CGRectGetMaxY(bounds), cornerRadius);
         CGPathAddArcToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMaxY(bounds), CGRectGetMaxX(bounds), CGRectGetMidY(bounds), cornerRadius);
@@ -232,7 +232,7 @@ static const CGFloat kSpaceDivide = 5.0f;
     CFRelease(pathRef);
     layer.fillColor = item.backgroundColor.CGColor;
     
-    if (addLine == YES && indexPath.row < [tableView numberOfRowsInSection:indexPath.section]-1) {
+    if (addLine == YES) {
         CALayer *lineLayer = [[CALayer alloc] init];
         CGFloat lineHeight = (1.f / [UIScreen mainScreen].scale);
         lineLayer.frame = CGRectMake(CGRectGetMinX(bounds), bounds.size.height-lineHeight, bounds.size.width, lineHeight);
@@ -321,16 +321,6 @@ static const CGFloat kSpaceDivide = 5.0f;
         return;
     }
 
-    // add item separator
-    AHKActionSheetItem *itemSeparator = [[AHKActionSheetItem alloc] init];
-    itemSeparator.title = @"";
-    itemSeparator.image = nil;
-    itemSeparator.backgroundColor = [UIColor clearColor];
-    itemSeparator.height = kSpaceDivide;
-    itemSeparator.type = AHKActionSheetButtonTypeDisabled;
-    itemSeparator.handler = nil;
-    [self.items addObject:itemSeparator];
-    
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
     UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow ahk_snapshot];
 
