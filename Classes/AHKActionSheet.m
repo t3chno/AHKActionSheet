@@ -25,9 +25,8 @@ static const CGFloat kFlickDownMinVelocity = 2000.0f;
 // How much free space to leave at the top (above the tableView's contents) when there's a lot of elements. It makes this control look similar to the UIActionSheet.
 static const CGFloat kTopSpaceMarginFraction = 0.0f;
 // cancelButton's shadow height as the ratio to the cancelButton's height
-static const CGFloat kCancelButtonShadowHeightRatio = 0.333f;
-// separator from tableview and button cancel
-static const CGFloat kSeparatorHeight = 1.0f;
+static const CGFloat kSpaceDivide = 5.0f;
+
 
 /// Used for storing button configuration.
 @interface AHKActionSheetItem : NSObject
@@ -69,14 +68,19 @@ static const CGFloat kSeparatorHeight = 1.0f;
     [appearance setBlurTintColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
     [appearance setBlurSaturationDeltaFactor:1.8f];
     [appearance setButtonHeight:60.0f];
+    [appearance setSeparatorHeight:0.0f];
     [appearance setCancelButtonHeight:44.0f];
     [appearance setAutomaticallyTintButtonImages:@YES];
     [appearance setSelectedBackgroundColor:[UIColor colorWithWhite:0.1f alpha:0.2f]];
-    [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
+    [appearance setCancelButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
+                                                 NSForegroundColorAttributeName : [UIColor darkGrayColor] }];
     [appearance setButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f]}];
-    [appearance setDisabledButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f], NSForegroundColorAttributeName : [UIColor colorWithWhite:0.6f alpha:1.0] }];
-    [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f], NSForegroundColorAttributeName : [UIColor redColor] }];
-    [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f], NSForegroundColorAttributeName : [UIColor grayColor] }];
+    [appearance setDisabledButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
+                                                   NSForegroundColorAttributeName : [UIColor colorWithWhite:0.6f alpha:1.0] }];
+    [appearance setDestructiveButtonTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:17.0f],
+                                                      NSForegroundColorAttributeName : [UIColor redColor] }];
+    [appearance setTitleTextAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:14.0f],
+                                          NSForegroundColorAttributeName : [UIColor grayColor] }];
     [appearance setCancelOnPanGestureEnabled:@(YES)];
     [appearance setCancelOnTapEmptyAreaEnabled:@(NO)];
     [appearance setAnimationDuration:kDefaultAnimationDuration];
@@ -133,6 +137,8 @@ static const CGFloat kSeparatorHeight = 1.0f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+    
+    //cell.separatorInset = UIEdgeInsetsMake(0.f, 55.f, 0.f, 0.f);
     
     AHKActionSheetItem *item = self.items[(NSUInteger)indexPath.row];
 
@@ -203,7 +209,7 @@ static const CGFloat kSeparatorHeight = 1.0f;
     CGMutablePathRef pathRef = CGPathCreateMutable();
     CGRect bounds = CGRectInset(cell.bounds, 10, 0);
     BOOL addLine = NO;
-        
+    
     if (indexPath.row == 0 && indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1) {
         CGPathAddRoundedRect(pathRef, nil, bounds, cornerRadius, cornerRadius);
     } else if (indexPath.row == 0) {
@@ -212,7 +218,7 @@ static const CGFloat kSeparatorHeight = 1.0f;
         CGPathAddArcToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMinY(bounds), CGRectGetMaxX(bounds), CGRectGetMidY(bounds), cornerRadius);
         CGPathAddLineToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMaxY(bounds));
         addLine = YES;
-    } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-1) {
+    } else if (indexPath.row == [tableView numberOfRowsInSection:indexPath.section]-2) {
         CGPathMoveToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMinY(bounds));
         CGPathAddArcToPoint(pathRef, nil, CGRectGetMinX(bounds), CGRectGetMaxY(bounds), CGRectGetMidX(bounds), CGRectGetMaxY(bounds), cornerRadius);
         CGPathAddArcToPoint(pathRef, nil, CGRectGetMaxX(bounds), CGRectGetMaxY(bounds), CGRectGetMaxX(bounds), CGRectGetMidY(bounds), cornerRadius);
@@ -221,19 +227,19 @@ static const CGFloat kSeparatorHeight = 1.0f;
         CGPathAddRect(pathRef, nil, bounds);
         addLine = YES;
     }
-        
+    
     layer.path = pathRef;
     CFRelease(pathRef);
     layer.fillColor = item.backgroundColor.CGColor;
-            
-    if (addLine == YES) {
+    
+    if (addLine == YES && indexPath.row < [tableView numberOfRowsInSection:indexPath.section]-1) {
         CALayer *lineLayer = [[CALayer alloc] init];
         CGFloat lineHeight = (1.f / [UIScreen mainScreen].scale);
         lineLayer.frame = CGRectMake(CGRectGetMinX(bounds), bounds.size.height-lineHeight, bounds.size.width, lineHeight);
         lineLayer.backgroundColor = tableView.separatorColor.CGColor;
         [layer addSublayer:lineLayer];
     }
-        
+    
     UIView *testView = [[UIView alloc] initWithFrame:bounds];
     [testView.layer insertSublayer:layer atIndex:0];
     testView.backgroundColor = UIColor.clearColor;
@@ -315,6 +321,16 @@ static const CGFloat kSeparatorHeight = 1.0f;
         return;
     }
 
+    // add item separator
+    AHKActionSheetItem *itemSeparator = [[AHKActionSheetItem alloc] init];
+    itemSeparator.title = @"";
+    itemSeparator.image = nil;
+    itemSeparator.backgroundColor = [UIColor clearColor];
+    itemSeparator.height = kSpaceDivide;
+    itemSeparator.type = AHKActionSheetButtonTypeDisabled;
+    itemSeparator.handler = nil;
+    [self.items addObject:itemSeparator];
+    
     self.previousKeyWindow = [UIApplication sharedApplication].keyWindow;
     UIImage *previousKeyWindowSnapshot = [self.previousKeyWindow ahk_snapshot];
 
@@ -336,22 +352,23 @@ static const CGFloat kSeparatorHeight = 1.0f;
 
     void(^delayedAnimations)(void) = ^(void) {
         
-        self.cancelButton.frame = CGRectMake(10, CGRectGetMaxY(self.bounds) - self.cancelButtonHeight - 5, CGRectGetWidth(self.bounds) - 20, self.cancelButtonHeight - 5);
-        
+        self.cancelButton.frame = CGRectMake(10, CGRectGetMaxY(self.bounds) - self.cancelButtonHeight, CGRectGetWidth(self.bounds) - 20, self.cancelButtonHeight - kSpaceDivide);
+    
+        // Corner Radius
         self.cancelButton.layer.cornerRadius = 10;
         self.cancelButton.clipsToBounds = YES;
-
+        
         // Add White color background
         self.cancelButton.backgroundColor = [UIColor whiteColor];
         
         self.tableView.transform = CGAffineTransformMakeTranslation(0, 0);
 
         // manual calculation of table's contentSize.height
-        CGFloat tableContentHeight = 0;
+        CGFloat tableContentHeight = 0; //[self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
         for (AHKActionSheetItem *item in self.items) {
             tableContentHeight = tableContentHeight + item.height;
         }
-        tableContentHeight = tableContentHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
+        tableContentHeight = tableContentHeight + self.separatorHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
         
         CGFloat topInset;
         BOOL buttonsFitInWithoutScrolling = tableContentHeight < CGRectGetHeight(self.tableView.frame) * (1.0 - kTopSpaceMarginFraction);
@@ -363,6 +380,8 @@ static const CGFloat kSeparatorHeight = 1.0f;
             topInset = (CGFloat)round(CGRectGetHeight(self.tableView.frame) * kTopSpaceMarginFraction);
         }
         
+        self.tableView.contentInset = UIEdgeInsetsMake(topInset, 0, 0, 0);
+
         self.tableView.bounces = [self.cancelOnPanGestureEnabled boolValue] || !buttonsFitInWithoutScrolling;
     };
 
@@ -428,7 +447,7 @@ static const CGFloat kSeparatorHeight = 1.0f;
         // animate sliding down tableView and cancelButton.
         [UIView animateWithDuration:duration animations:^{
             self.blurredBackgroundView.alpha = 0.0f;
-            self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, 0, self.cancelButtonHeight);
+            self.cancelButton.transform = CGAffineTransformTranslate(self.cancelButton.transform, 0, self.cancelButtonHeight - kSpaceDivide);
             self.cancelButtonShadowView.alpha = 0.0f;
 
             // Shortest shift of position sufficient to hide all tableView contents below the bottom margin.
@@ -478,7 +497,6 @@ static const CGFloat kSeparatorHeight = 1.0f;
 - (void)setUpCancelButton
 {
     UIButton *cancelButton;
-    
     // It's hard to check if UIButtonTypeSystem enumeration exists, so we're checking existence of another method that was introduced in iOS 7.
     if ([UIView instancesRespondToSelector:@selector(tintAdjustmentMode)]) {
         cancelButton= [UIButton buttonWithType:UIButtonTypeSystem];
@@ -490,34 +508,23 @@ static const CGFloat kSeparatorHeight = 1.0f;
     
     [cancelButton setAttributedTitle:attrTitle forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
+        
     // move the button below the screen (ready to be animated -show)
-    cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight);
+    cancelButton.transform = CGAffineTransformMakeTranslation(0, self.cancelButtonHeight - kSpaceDivide);
     cancelButton.clipsToBounds = YES;
     [self addSubview:cancelButton];
 
     self.cancelButton = cancelButton;
-
-    // add a small shadow/glow above the button
-    if (self.cancelButtonShadowColor) {
-        self.cancelButton.clipsToBounds = NO;
-        CGFloat gradientHeight = (CGFloat)round(self.cancelButtonHeight * kCancelButtonShadowHeightRatio);
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -gradientHeight, CGRectGetWidth(self.bounds), gradientHeight)];
-        CAGradientLayer *gradient = [CAGradientLayer layer];
-        gradient.frame = view.bounds;
-        gradient.colors = @[ (id)[UIColor colorWithWhite:0.0 alpha:0.0].CGColor, (id)[self.blurTintColor colorWithAlphaComponent:0.1f].CGColor ];
-        [view.layer insertSublayer:gradient atIndex:0];
-        [self.cancelButton addSubview:view];
-        self.cancelButtonShadowView = view;
-    }
 }
 
 - (void)setUpTableView
 {
     CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
     CGFloat statusBarHeight = CGRectGetHeight(statusBarViewRect);
-   
-    CGRect frame = CGRectMake(0, statusBarHeight - 5, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
+    CGRect frame = CGRectMake(0,
+                              statusBarHeight,
+                              CGRectGetWidth(self.bounds),
+                              CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
 
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     
