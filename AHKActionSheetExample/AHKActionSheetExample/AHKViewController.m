@@ -78,44 +78,44 @@
     actionSheet.blurRadius = 0.5f;
     actionSheet.buttonHeight = 50.0;
     actionSheet.cancelButtonHeight = 50.0f;
-    actionSheet.separatorHeight = 20.0f;
     actionSheet.selectedBackgroundColor = [UIColor colorWithRed:0.0/255.0 green:130.0/255.0 blue:201.0/255.0 alpha:0.1];
+    
     actionSheet.encryptedButtonTextAttributes = @{ NSFontAttributeName:[UIFont systemFontOfSize:17], NSForegroundColorAttributeName:[UIColor colorWithRed:241.0/255.0 green:90.0/255.0 blue:34.0/255.0 alpha:1.0] };
     actionSheet.buttonTextAttributes = @{ NSFontAttributeName:[UIFont systemFontOfSize:17], NSForegroundColorAttributeName:[UIColor colorWithRed:65.0/255.0 green:64.0/255.0 blue:66.0/255.0 alpha:1.0] };
-    actionSheet.separatorColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:0.2];
+    actionSheet.separatorColor = [UIColor whiteColor];
     actionSheet.cancelButtonTitle = @"Cancel";
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"One", nil)
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"1", nil)
                               image:[UIImage imageNamed:@"Icon2"]
-                    backgroundColor: [UIColor whiteColor]
+                    backgroundColor: [UIColor blueColor]
                              height:50.0
                                type:AHKActionSheetButtonTypeDefault
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
                             }];
    
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Two", nil)
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"2", nil)
                               image:[UIImage imageNamed:@"Icon2"]
-                    backgroundColor: [UIColor whiteColor]
-                             height:10.0
+                    backgroundColor: [UIColor blueColor]
+                             height:20.0
                                type:AHKActionSheetButtonTypeEncrypted
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
                             }];
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Two", nil)
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"3", nil)
                               image:[UIImage imageNamed:@"Icon2"]
-                    backgroundColor: [UIColor whiteColor]
+                    backgroundColor: [UIColor blueColor]
                              height:50.0
                                type:AHKActionSheetButtonTypeEncrypted
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
                             }];
 
-    [actionSheet addButtonWithTitle:NSLocalizedString(@"Two", nil)
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"4", nil)
                               image:[UIImage imageNamed:@"Icon2"]
-                    backgroundColor: [UIColor whiteColor]
-                             height:10.0
+                    backgroundColor: [UIColor blueColor]
+                             height:20.0
                                type:AHKActionSheetButtonTypeEncrypted
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
@@ -123,7 +123,7 @@
 
     [actionSheet addButtonWithTitle:NSLocalizedString(@"Delete", nil)
                               image:[UIImage imageNamed:@"Icon4"]
-                    backgroundColor: [UIColor whiteColor]
+                    backgroundColor: [UIColor blueColor]
                              height:50.0
                                type:AHKActionSheetButtonTypeDestructive
                             handler:^(AHKActionSheet *as) {
