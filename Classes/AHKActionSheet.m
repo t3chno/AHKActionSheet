@@ -529,7 +529,12 @@ static const CGFloat kSeparatorHeight = 1.0f;
     
     tableView.backgroundColor = [UIColor clearColor];
     tableView.showsVerticalScrollIndicator = NO;
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 
+    if (self.separatorColor) {
+        tableView.separatorColor = self.separatorColor;
+    }
+    
     tableView.delegate = self;
     tableView.dataSource = self;
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kCellIdentifier];
