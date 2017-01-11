@@ -186,15 +186,12 @@ static const CGFloat kSpaceDivide = 5.0f;
         }
     }
     
-    [cell.contentView addSubview:imageView];
-        
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(cell.frame.size.height + 5 , 0, cell.frame.size.width - cell.frame.size.height - 20, cell.frame.size.height)];
     NSAttributedString *attrTitle = [[NSAttributedString alloc] initWithString:item.title attributes:attributes];
     label.text =  [NSString stringWithFormat: @"test"];
     label.numberOfLines = 0;
     label.attributedText = attrTitle;
     label.textAlignment = [self.buttonTextCenteringEnabled boolValue] ? NSTextAlignmentCenter : NSTextAlignmentLeft;
-    [cell.contentView addSubview:label];
     
     cell.backgroundColor = item.backgroundColor;
 
@@ -202,6 +199,12 @@ static const CGFloat kSpaceDivide = 5.0f;
         cell.selectedBackgroundView = [[UIView alloc] init];
         cell.selectedBackgroundView.backgroundColor = self.selectedBackgroundColor;
     }
+    
+    for (UIView *subview in [cell.contentView subviews])
+        [subview removeFromSuperview];
+    
+    [cell.contentView addSubview:imageView];
+    [cell.contentView addSubview:label];
 
     return cell;
 }
