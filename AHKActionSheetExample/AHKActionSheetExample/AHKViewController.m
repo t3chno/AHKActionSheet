@@ -192,6 +192,7 @@
                                 NSLog(@"Favorite tapped");
                             }];
 
+    /*
     [actionSheet addButtonWithTitle:NSLocalizedString(@"13", nil)
                               image:[UIImage imageNamed:@"Icon2"]
                     backgroundColor: [UIColor blueColor]
@@ -227,26 +228,8 @@
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Delete tapped");
                             }];
-    
+    */
     [actionSheet show];
-}
-
-#pragma mark - Private
-
-+ (UIView *)fancyHeaderView
-{
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 60)];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Cover"]];
-    imageView.frame = CGRectMake(10, 10, 40, 40);
-    [headerView addSubview:imageView];
-    UILabel *label1 = [[UILabel alloc] initWithFrame:CGRectMake(60, 20, 200, 20)];
-    label1.text = @"Some helpful description";
-    label1.textColor = [UIColor whiteColor];
-    label1.font = [UIFont fontWithName:@"Avenir" size:17.0f];
-    label1.backgroundColor = [UIColor clearColor];
-    [headerView addSubview:label1];
-
-    return  headerView;
 }
 
 @end

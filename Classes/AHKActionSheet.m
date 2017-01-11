@@ -376,7 +376,8 @@ static const CGFloat kSpaceDivide = 5.0f;
         self.tableView.transform = CGAffineTransformMakeTranslation(0, 0);
 
         // manual calculation of table's contentSize.height
-        CGFloat tableContentHeight = 0; //[self.items count] * self.buttonHeight + CGRectGetHeight(self.tableView.tableHeaderView.frame);
+        CGFloat tableContentHeight = 0;
+        
         for (AHKActionSheetItem *item in self.items) {
             tableContentHeight = tableContentHeight + item.height;
         }
@@ -535,7 +536,7 @@ static const CGFloat kSpaceDivide = 5.0f;
 {
     CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
     CGFloat statusBarHeight = CGRectGetHeight(statusBarViewRect);
-    CGRect frame = CGRectMake(0, statusBarHeight, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
+    CGRect frame = CGRectMake(0, statusBarHeight, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight - self.separatorHeight);
 
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     
