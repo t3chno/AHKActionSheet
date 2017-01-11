@@ -138,7 +138,10 @@ static const CGFloat kSpaceDivide = 5.0f;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell;
+    
+    if (cell == nil)
+        cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
@@ -316,11 +319,6 @@ static const CGFloat kSpaceDivide = 5.0f;
 }
 
 #pragma mark - Public
-
-- (void)addButtonWithTitle:(NSString *)title type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
-{
-    [self addButtonWithTitle:title image:nil backgroundColor:[UIColor whiteColor] height:self.buttonHeight type:type handler:handler];
-}
 
 - (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image backgroundColor:(UIColor *)backgroundColor height:(CGFloat)height type:(AHKActionSheetButtonType)type handler:(AHKActionSheetHandler)handler
 {
@@ -534,10 +532,7 @@ static const CGFloat kSpaceDivide = 5.0f;
 {
     CGRect statusBarViewRect = [self convertRect:[UIApplication sharedApplication].statusBarFrame fromView:nil];
     CGFloat statusBarHeight = CGRectGetHeight(statusBarViewRect);
-    CGRect frame = CGRectMake(0,
-                              statusBarHeight,
-                              CGRectGetWidth(self.bounds),
-                              CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
+    CGRect frame = CGRectMake(0, statusBarHeight, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - statusBarHeight - self.cancelButtonHeight);
 
     UITableView *tableView = [[UITableView alloc] initWithFrame:frame];
     

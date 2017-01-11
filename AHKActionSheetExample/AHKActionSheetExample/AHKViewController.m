@@ -101,7 +101,7 @@
     [actionSheet addButtonWithTitle:NSLocalizedString(@"2", nil)
                               image:[UIImage imageNamed:@"Icon2"]
                     backgroundColor: [UIColor blueColor]
-                             height:20.0
+                             height:40.0
                                type:AHKActionSheetButtonTypeEncrypted
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
@@ -119,7 +119,101 @@
     [actionSheet addButtonWithTitle:NSLocalizedString(@"4", nil)
                               image:[UIImage imageNamed:@"Icon2"]
                     backgroundColor: [UIColor blueColor]
-                             height:20.0
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"5", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"6", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"7", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"8", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"9", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"10", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"11", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"12", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"13", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"14", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
+                               type:AHKActionSheetButtonTypeEncrypted
+                            handler:^(AHKActionSheet *as) {
+                                NSLog(@"Favorite tapped");
+                            }];
+
+    [actionSheet addButtonWithTitle:NSLocalizedString(@"15", nil)
+                              image:[UIImage imageNamed:@"Icon2"]
+                    backgroundColor: [UIColor blueColor]
+                             height:40.0
                                type:AHKActionSheetButtonTypeEncrypted
                             handler:^(AHKActionSheet *as) {
                                 NSLog(@"Favorite tapped");
